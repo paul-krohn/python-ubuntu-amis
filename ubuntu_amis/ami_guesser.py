@@ -82,34 +82,21 @@ class Finder(object):
         # print len(raw_data)
         field_keys = self.field_map.keys()
         release_data = {}
-        line_number = 0
         for line in raw_data:
             clean_line = line.strip()
             field_values = clean_line.split("\t")
-            release = field_values[self.field_map['release']]
             region = field_values[self.field_map['region']]
             root_store = field_values[self.field_map['root_store']]
             cpu_arch = field_values[self.field_map['cpu_arch']]
             instance_arch = field_values[self.field_map['instance_arch']]
             ami_id = field_values[self.field_map['ami_id']]
-            summary = {
-                'release': release,
-                'root_store': root_store,
-                'cpu_arch': cpu_arch,
-                'region': region,
-                'ami_id': ami_id,
-                'instance_arch': instance_arch,
-            }
 
-            if release not in release_data.keys():
-                release_data[release] = {}
-            if region not in release_data[release].keys():
-                release_data[release][region] = {}
-            if root_store not in release_data[release][region].keys():
-                release_data[release][region][root_store] = {}
-            if cpu_arch not in release_data[release][region][root_store].keys():
-                release_data[release][region][root_store][cpu_arch] = {}
-            if instance_arch not in release_data[release][region][root_store][cpu_arch].keys():
-                release_data[release][region][root_store][cpu_arch][instance_arch] = ami_id
-            line_number += 1
-        return release_data[release]
+            if region not in release_data.keys():
+                release_data[region] = {}
+            if root_store not in release_data[region].keys():
+                release_data[region][root_store] = {}
+            if cpu_arch not in release_data[region][root_store].keys():
+                release_data[region][root_store][cpu_arch] = {}
+            if instance_arch not in release_data[region][root_store][cpu_arch].keys():
+                release_data[region][root_store][cpu_arch][instance_arch] = ami_id
+        return release_data
