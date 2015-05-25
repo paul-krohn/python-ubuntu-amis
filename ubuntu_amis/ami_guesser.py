@@ -7,9 +7,8 @@ import json
 class Finder(object):
     '''
     Based on the region, release, root device storage provided, load data
-    from https://raw.githubusercontent.com/github/gitignore/master/Python.gitignore
-    http://uec-images.ubuntu.com/query/<release>/server/released.current.txt
-    and return the ami one should use to
+    from http://uec-images.ubuntu.com/query/<release>/server/released.current.txt
+    and return the relevant ami id.
     '''
 
     def __init__(self, cache_directory='/tmp', cache_time=3600):
